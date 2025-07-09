@@ -1,8 +1,8 @@
 import { Calendar, Tag, X } from "lucide-react"
 import { Button } from "../../components/button"
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import { api } from "../../lib/axios"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { AxiosError } from "axios"
 
 interface CreativeActivityModalProps {
@@ -11,9 +11,13 @@ interface CreativeActivityModalProps {
 
 export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivityModalProps) {
   const { tripId } = useParams()
+  const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    if (isSubmitting) return
 
     const data = new FormData(event.currentTarget)
 
@@ -27,7 +31,9 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
     }
 
     try {
-      // Primeira requisição: criar a atividade
+      setIsSubmitting(true)
+      
+      // Criar a atividade
       await api.post(`/trips/${tripId}/activities`, {
         title,
         occurs_at
@@ -36,10 +42,13 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
       // Fecha o modal
       closeCreateActivityModal()
       
-      // Força uma atualização da página após um pequeno delay
-      setTimeout(() => {
-        window.location.reload()
-      }, 100)
+      // Recarrega os dados
+      const response = await api.get(`/trips/${tripId}/activities`)
+      
+      if (response.data) {
+        // Redireciona para a mesma página para atualizar os dados
+        navigate(`/trips/${tripId}`, { replace: true })
+      }
 
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
@@ -51,6 +60,8 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
       }
       
       alert(errorMessage)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -81,7 +92,6 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
         </div>
 
         <form onSubmit={createActivity} className='space-y-3'>
-
           <div 
             className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2 relative overflow-hidden'
             style={{
@@ -105,6 +115,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
               placeholder='Qual a atividade?'
               className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -133,12 +144,13 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
                 className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
                 defaultValue={getDefaultDateTime()}
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
 
-          <Button variant="primary" size="full">
-            Salvar atividade
+          <Button variant="primary" size="full" disabled={isSubmitting}>
+            {isSubmitting ? 'Salvando...' : 'Salvar atividade'}
           </Button>
         </form>
       </div>
