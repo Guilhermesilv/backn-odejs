@@ -31,7 +31,7 @@ export function Button({ children, variant, size, className, ...props }: ButtonP
     return (
       <ShimmerButton
         background="linear-gradient(to right, #6cb9d3, #4a9bc7)"
-        shimmerColor="#ffffff"
+        shimmerColor="black"
         borderRadius="8px"
         shimmerDuration="3s"
         className={`${buttonVariants({ variant: 'primary', size })} text-black ${className || ''}`}
@@ -42,7 +42,6 @@ export function Button({ children, variant, size, className, ...props }: ButtonP
     );
   }
 
-  // Se for variante secondary, usa button normal
   return (
     <button {...props} className={`${buttonVariants({ variant, size })} ${className || ''}`}>
       {children}

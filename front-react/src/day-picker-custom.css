@@ -1,4 +1,34 @@
-.DayPicker-Day--selected {
-  background-color: #bef264 !important; /* Escolha a cor que você deseja */
+.rdp-day_selected:not([disabled]),
+.rdp-day_selected:focus:not([disabled]),
+.rdp-day_selected:active:not([disabled]),
+.rdp-day_selected:hover:not([disabled]) {
+  background-color: #6cb9d3 !important;
   color: white !important;
+}
+
+.rdp-day_range_start:not([disabled]),
+.rdp-day_range_end:not([disabled]) {
+  background-color: #036c8a !important;
+  color: white !important;
+}
+
+.rdp-day_range_middle:not([disabled]) {
+  background-color: rgba(108, 185, 211, 0.3) !important;
+  color: white !important;
+}
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #6cb9d3;
+  --rdp-background-color: rgba(108, 185, 211, 0.2);
+  margin: 0;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: rgba(108, 185, 211, 0.2) !important;
+}
+
+.rdp-day_today:not(.rdp-day_outside) {
+  font-weight: bold;
+  color: #6cb9d3;
 }

@@ -5,7 +5,7 @@ import { type DateRange, DayPicker } from "react-day-picker";
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import 'react-day-picker/dist/style.css';
-
+import '../../../day-picker-custom.css';
 
 
 interface DestinationAndDateStepProps {
@@ -91,9 +91,9 @@ export function DestinationAndDateStep({
         />
       </div>
 
-      <button onClick={openDatePicker} disabled={isGuestsInputOpen} className='flex items-center gap-2 text-left w-[240px] relative z-10'>
-        <Calendar className="size-5 text-zinc-400" />
-        <span className="text-lg text-zinc-400 w-40 flex-1">
+      <button onClick={openDatePicker} disabled={isGuestsInputOpen} className='flex items-center gap-2 text-left min-w-[320px] relative z-10'>
+        <Calendar className="size-5 text-zinc-400 shrink-0" />
+        <span className="text-lg text-zinc-400 truncate">
           {displayedDate || "Quando?"}
         </span>
       </button>
@@ -103,14 +103,20 @@ export function DestinationAndDateStep({
           <div className="rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Selecione a data</h2>
-                <button type="button" onClick={closeDatePicker}>
+                <h2 className="text-lg font-semibold text-zinc-100">Selecione a data</h2>
+                <button type="button" onClick={closeDatePicker} className="hover:bg-zinc-800 p-2 rounded-lg transition-colors">
                   <X className="size-5 text-zinc-400" />
                 </button>
               </div>
             </div>
 
-             <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates} />
+            <DayPicker 
+              mode="range" 
+              selected={eventStartAndEndDates} 
+              onSelect={setEventStartAndEndDates}
+              locale={ptBR}
+              className="text-zinc-300"
+            />
           </div>
         </div>
       )}

@@ -7,6 +7,7 @@ import { InviteGuestsStep } from './steps/InputsInicioConvidados'
 import { DateRange } from 'react-day-picker'
 import { api } from '../../lib/axios'
 import { Safari } from "@/components/magicui/safari"
+import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern"
 
 export function CreateTripPage() {
   const navigate = useNavigate()
@@ -111,7 +112,18 @@ export function CreateTripPage() {
   }
 
   return (
-    <div className="h-screen relative overflow-hidden">
+    <div className="h-screen relative overflow-hidden min-h-[800px]">
+      {/* Grid interativo de fundo */}
+      <div className="absolute inset-0 z-0 opacity-[0.02]">
+        <InteractiveGridPattern 
+          width={50} 
+          height={50} 
+          className="!border-none" 
+          squares={[40, 20]}
+          squaresClassName="stroke-white/20 [&:not(:hover)]:duration-500 hover:fill-white/10"
+        />
+      </div>
+
       {/* Imagem de fundo ocupando toda a página */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
@@ -130,37 +142,37 @@ export function CreateTripPage() {
 
       
       {/* Container principal que agrupa inputs */}
-      <div className="flex flex-col items-center space-y-8 relative z-30 mt-16 w-full">
+      <div className="flex flex-col items-center space-y-6 relative z-30 mt-16 w-full min-w-[320px]">
         {/* Conteúdo principal - inputs */}
-        <div className="max-w-3xl w-full px-6 text-center space-y-10">
-        <div className='flex flex-col items-center gap-3'>
-          <img src="/logo.png" alt="itinity" className='w-40 h-20'  />
-          <p className="text-zinc-300 text-lg">Convide seus amigos e planeje sua próxim viagem!</p>
-        </div>
+        <div className="max-w-4xl w-full px-6 text-center space-y-8">
+          <div className='flex flex-col items-center gap-3 min-h-[120px]'>
+            <img src="/logo.png" alt="itinity" className='w-40 h-20'  />
+            <p className="text-zinc-300 text-lg">Convide seus amigos e planeje sua próxima viagem!</p>
+          </div>
 
-        <div className='space-y-4'>
-          <DestinationAndDateStep
-            closeGuestsInput={closeGuestsInput}
-            isGuestsInputOpen={isGuestsInputOpen}
-            openGuestsInput={openGuestsInput}
-            setDestination={setDestination}
-            eventStartAndEndDates={eventStartAndEndDates}
-            setEventStartAndEndDates={setEventStartAndEndDates}
-          />
-
-          {isGuestsInputOpen && (
-            <InviteGuestsStep
-              openGuestsModal={openGuestsModal}
-              openConfirmTripModal={openConfirmTripModal}
-              emailsToInvite={emailsToInvite}
+          <div className='space-y-4 min-w-[300px]'>
+            <DestinationAndDateStep
+              closeGuestsInput={closeGuestsInput}
+              isGuestsInputOpen={isGuestsInputOpen}
+              openGuestsInput={openGuestsInput}
+              setDestination={setDestination}
+              eventStartAndEndDates={eventStartAndEndDates}
+              setEventStartAndEndDates={setEventStartAndEndDates}
             />
-          )}
-        </div>
 
-        <p className="text-sm text-zinc-500">
-          Ao planejar sua viagem pela Itiny você automaticamente concorda <br />
-          com nossos <a className="text-zinc-300 underline" href="#">termos de uso</a> e <a className="text-zinc-300 underline" href="#">políticas de privacidade</a>.
-        </p>
+            {isGuestsInputOpen && (
+              <InviteGuestsStep
+                openGuestsModal={openGuestsModal}
+                openConfirmTripModal={openConfirmTripModal}
+                emailsToInvite={emailsToInvite}
+              />
+            )}
+          </div>
+
+          <p className="text-sm text-zinc-500 mt-4">
+            Ao planejar sua viagem pela Itiny você automaticamente concorda <br />
+            com nossos <a className="text-zinc-300 underline" href="#">termos de uso</a> e <a className="text-zinc-300 underline" href="#">políticas de privacidade</a>.
+          </p>
         </div>
       </div>
       

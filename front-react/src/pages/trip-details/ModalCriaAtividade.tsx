@@ -32,8 +32,13 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
         occurs_at
       })
 
+      // Em vez de recarregar a página, apenas feche o modal
       closeCreateActivityModal()
-      window.document.location.reload()
+      
+      // Use window.location.href para navegar para a mesma página
+      const currentPath = window.location.pathname
+      window.location.href = currentPath
+
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
       
