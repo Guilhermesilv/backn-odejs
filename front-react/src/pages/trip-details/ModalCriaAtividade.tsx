@@ -27,24 +27,19 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
     }
 
     try {
+      // Primeira requisição: criar a atividade
       await api.post(`/trips/${tripId}/activities`, {
         title,
         occurs_at
       })
 
-      // Primeiro fecha o modal
+      // Fecha o modal
       closeCreateActivityModal()
       
-      // Depois recarrega apenas os dados necessários
-      try {
-        await api.get(`/trips/${tripId}/activities`)
-        // Recarrega a página de forma mais suave
-        setTimeout(() => {
-          window.location.reload()
-        }, 300)
-      } catch (error) {
-        console.error('Erro ao atualizar atividades:', error)
-      }
+      // Força uma atualização da página após um pequeno delay
+      setTimeout(() => {
+        window.location.reload()
+      }, 100)
 
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
