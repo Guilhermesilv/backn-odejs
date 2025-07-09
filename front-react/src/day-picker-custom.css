@@ -1,0 +1,4 @@
+.DayPicker-Day--selected {
+  background-color: #bef264 !important; /* Escolha a cor que você deseja */
+  color: white !important;
+}
