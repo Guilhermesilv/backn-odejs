@@ -32,12 +32,19 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
         occurs_at
       })
 
-      // Em vez de recarregar a página, apenas feche o modal
+      // Primeiro fecha o modal
       closeCreateActivityModal()
       
-      // Use window.location.href para navegar para a mesma página
-      const currentPath = window.location.pathname
-      window.location.href = currentPath
+      // Depois recarrega apenas os dados necessários
+      try {
+        await api.get(`/trips/${tripId}/activities`)
+        // Recarrega a página de forma mais suave
+        setTimeout(() => {
+          window.location.reload()
+        }, 300)
+      } catch (error) {
+        console.error('Erro ao atualizar atividades:', error)
+      }
 
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
