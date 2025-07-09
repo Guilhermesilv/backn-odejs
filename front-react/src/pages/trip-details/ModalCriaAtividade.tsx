@@ -2,16 +2,20 @@ import { Calendar, Tag, X } from "lucide-react"
 import { Button } from "../../components/button"
 import { FormEvent, useState } from "react"
 import { api } from "../../lib/axios"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { AxiosError } from "axios"
 
 interface CreativeActivityModalProps {
   closeCreateActivityModal: () => void
 }
 
+// Referência externa para forçar atualização das atividades
+export const forceActivitiesRefresh = {
+  timestamp: 0
+};
+
 export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivityModalProps) {
   const { tripId } = useParams()
-  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
@@ -42,13 +46,11 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
       // Fecha o modal
       closeCreateActivityModal()
       
-      // Recarrega os dados
-      const response = await api.get(`/trips/${tripId}/activities`)
+      // Força atualização das atividades
+      forceActivitiesRefresh.timestamp = Date.now()
       
-      if (response.data) {
-        // Redireciona para a mesma página para atualizar os dados
-        navigate(`/trips/${tripId}`, { replace: true })
-      }
+      // Mostra mensagem de sucesso
+      alert('Atividade criada com sucesso!')
 
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
