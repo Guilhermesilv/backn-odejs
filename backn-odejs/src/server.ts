@@ -53,6 +53,10 @@ app.register(updateTrip)
 app.register(getTripDetails)
 app.register(getParticipant)
 
+app.get('/', async () => {
+  return { status: 'ok', message: 'API online!' }
+})
+
 const start = async () => {
   try {
     await app.listen({ 
