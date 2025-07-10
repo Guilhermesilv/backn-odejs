@@ -1,58 +1,55 @@
-import React, { ComponentPropsWithoutRef, CSSProperties } from "react";
+import { cn } from "@/lib/utils"
+import React, { useEffect, useState } from "react"
 
-import { cn } from "@/lib/utils";
-
-interface RippleProps extends ComponentPropsWithoutRef<"div"> {
-  mainCircleSize?: number;
-  mainCircleOpacity?: number;
-  numCircles?: number;
+interface RippleProps extends React.HTMLAttributes<HTMLDivElement> {
+  color?: string
+  duration?: number
 }
 
-export const Ripple = React.memo(function Ripple({
-  mainCircleSize = 210,
-  mainCircleOpacity = 0.24,
-  numCircles = 8,
+export function Ripple({
   className,
+  color = "rgba(255, 255, 255, 0.2)",
+  duration = 1000,
   ...props
 }: RippleProps) {
+  const [ripples, setRipples] = useState<{ x: number; y: number; key: number }[]>([])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const x = Math.random() * 100
+      const y = Math.random() * 100
+      setRipples((prev) => [...prev, { x, y, key: Date.now() }])
+    }, duration)
+
+    return () => clearInterval(interval)
+  }, [duration])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (ripples.length > 0) {
+        setRipples((prev) => prev.slice(1))
+      }
+    }, duration)
+
+    return () => clearTimeout(timeout)
+  }, [ripples, duration])
+
   return (
-    <div
-      className={cn(
-        "pointer-events-none absolute inset-0 select-none [mask-image:linear-gradient(to_bottom,white,transparent)]",
-        className,
-      )}
-      {...props}
-    >
-      {Array.from({ length: numCircles }, (_, i) => {
-        const size = mainCircleSize + i * 70;
-        const opacity = mainCircleOpacity - i * 0.03;
-        const animationDelay = `${i * 0.06}s`;
-        const borderStyle = i === numCircles - 1 ? "dashed" : "solid";
-        const borderOpacity = 5 + i * 5;
-
-        return (
-          <div
-            key={i}
-            className={`[--i: absolute animate-ripple rounded-full border bg-foreground/25 shadow-xl${i}]`}
-            style={
-              {
-                width: `${size}px`,
-                height: `${size}px`,
-                opacity,
-                animationDelay,
-                borderStyle,
-                borderWidth: "1px",
-                borderColor: `hsl(var(--foreground), ${borderOpacity / 100})`,
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%) scale(1)",
-              } as CSSProperties
-            }
-          />
-        );
-      })}
+    <div className={cn("relative overflow-hidden", className)} {...props}>
+      {ripples.map(({ x, y, key }) => (
+        <div
+          key={key}
+          className="absolute rounded-full animate-ripple"
+          style={{
+            left: `${x}%`,
+            top: `${y}%`,
+            width: "10px",
+            height: "10px",
+            backgroundColor: color,
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      ))}
     </div>
-  );
-});
-
-Ripple.displayName = "Ripple";
+  )
+}

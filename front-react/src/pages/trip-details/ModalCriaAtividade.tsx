@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react"
 import { api } from "../../lib/axios"
 import { useParams } from "react-router-dom"
 import { AxiosError } from "axios"
+import { useToast } from "../../lib/toast-context"
 
 interface CreativeActivityModalProps {
   closeCreateActivityModal: () => void
@@ -17,6 +18,7 @@ export const forceActivitiesRefresh = {
 export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivityModalProps) {
   const { tripId } = useParams()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { showToast } = useToast()
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -30,7 +32,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
 
     // Validação básica antes de enviar
     if (!title || !occurs_at) {
-      alert('Por favor, preencha todos os campos')
+      showToast('Por favor, preencha todos os campos', 'error')
       return
     }
 
@@ -50,7 +52,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
       forceActivitiesRefresh.timestamp = Date.now()
       
       // Mostra mensagem de sucesso
-      alert('Atividade criada com sucesso!')
+      showToast('Atividade criada com sucesso!', 'success')
 
     } catch (error) {
       console.error('Erro ao criar atividade:', error)
@@ -61,7 +63,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
         errorMessage = error.response.data.message
       }
       
-      alert(errorMessage)
+      showToast(errorMessage, 'error')
     } finally {
       setIsSubmitting(false)
     }
