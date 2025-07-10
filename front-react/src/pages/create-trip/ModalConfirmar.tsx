@@ -46,7 +46,7 @@ export function ConfirmTripModal({
       <div className='w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5'>
         <div className='space-y-2'>
           <div className='flex items-center justify-between'>
-            <h2 className='text-lg font-semibold'>Confirmar criação de viagem</h2>
+            <h2 className='text-lg font-semibold text-zinc-100'>Confirmar criação de viagem</h2>
             <button type='button' onClick={closeConfirmTripModal}>
               <X className='size-5 text-zinc-400' />
             </button>

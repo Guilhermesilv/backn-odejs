@@ -94,10 +94,6 @@ export default {
           "0%": { transform: "scale(0)", opacity: "0.5" },
           "100%": { transform: "scale(4)", opacity: "0" },
         },
-        "shimmer-slide": {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
         "spin-around": {
           "100%": { transform: "rotate(1turn)" },
         },
@@ -109,7 +105,6 @@ export default {
         ripple: "ripple 1s linear forwards",
         marquee: "marquee var(--duration, 40s) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration, 40s) linear infinite",
-        "shimmer-slide": "shimmer-slide 1.5s linear infinite",
         "spin-around": "spin-around 8s linear infinite",
       },
     },

@@ -156,7 +156,7 @@ export function CreateTripPage() {
             {/* Conteúdo principal - inputs */}
             <div className="max-w-4xl w-full px-6 text-center space-y-8">
               <div className='flex flex-col items-center gap-3 min-h-[120px]'>
-                <img src="/logo.png" alt="itinity" className='w-40 h-20'  />
+                <img src="/logo.png?v=1" alt="itinity" className='w-40 h-20'  />
                 <p className="text-zinc-300 text-lg">Convide seus amigos e planeje sua próxima viagem!</p>
               </div>
 
@@ -192,7 +192,7 @@ export function CreateTripPage() {
               <Safari
                 url="itiny.com"
                 className="w-full h-auto"
-                imageSrc="/freepikteste.png"
+                imageSrc="/freepikteste.png?v=1"
               />  
             </div>
           </div>

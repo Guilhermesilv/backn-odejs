@@ -1,12 +1,11 @@
 import { ComponentProps, ReactNode } from "react";
 import { tv, VariantProps } from 'tailwind-variants'
-import { ShimmerButton } from "./magicui/shimmer-button";
 
 const buttonVariants = tv({
   base: 'rounded-lg px-5 font-medium flex items-center justify-center gap-2',
   variants: {
     variant: {
-      primary: '',
+      primary: 'bg-gradient-to-r from-[#6cb9d3] to-[#4a9bc7] text-black hover:brightness-110 transition-all',
       secondary: 'bg-zinc-800 text-zinc-200 hover:bg-zinc-700'
     },
     size: {
@@ -26,22 +25,6 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
 }
 
 export function Button({ children, variant, size, className, ...props }: ButtonProps) {
-  // Se for variante primary, usa ShimmerButton
-  if (variant === 'primary') {
-    return (
-      <ShimmerButton
-        background="linear-gradient(to right, #6cb9d3, #4a9bc7)"
-        shimmerColor="black"
-        borderRadius="8px"
-        shimmerDuration="3s"
-        className={`${buttonVariants({ variant: 'primary', size })} text-black ${className || ''}`}
-        {...props}
-      >
-        {children}
-      </ShimmerButton>
-    );
-  }
-
   return (
     <button {...props} className={`${buttonVariants({ variant, size })} ${className || ''}`}>
       {children}

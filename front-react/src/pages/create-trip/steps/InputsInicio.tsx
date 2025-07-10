@@ -82,12 +82,11 @@ export function DestinationAndDateStep({
       
       <div className='flex items-center gap-2 flex-1 relative z-10'>
         <MapPin className="size-5 text-zinc-400" />
-        <input 
-          disabled={isGuestsInputOpen} 
-          type="text" 
-          placeholder="Para onde você vai?" 
-          className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" 
-          onChange={event => setDestination(event.target.value)}
+        <input
+          type="text"
+          placeholder="Para onde vocês querem ir?"
+          className="w-full bg-transparent border-none outline-none text-white placeholder:text-zinc-500"
+          onChange={e => setDestination(e.target.value)}
         />
       </div>
 
