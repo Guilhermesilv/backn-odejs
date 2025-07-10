@@ -25,11 +25,11 @@ export function Toast({ message, type = 'success', duration = 3000, onClose }: T
       className={`fixed bottom-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       } ${
-        type === 'success' ? 'bg-zinc-800 border border-primary-500' : 'bg-zinc-800 border border-red-500'
+        type === 'success' ? 'bg-zinc-800 border border-blue-400' : 'bg-zinc-800 border border-red-500'
       }`}
     >
       {type === 'success' ? (
-        <CheckCircle className="size-5 text-primary-500" />
+        <CheckCircle className="size-5 text-blue-400" />
       ) : (
         <AlertCircle className="size-5 text-red-500" />
       )}
