@@ -201,10 +201,10 @@ export function CreateTripPage() {
         <footer className="relative z-30 border-t border-zinc-800 py-12 px-6">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-4">
-              <img src="/logo.png" alt="itinity" className="w-24 h-12" />
+              <img src="https://i.postimg.cc/zvyNVnhy/logo.png" alt="itinity" className="w-24 h-12" />
               <div className="h-6 w-px bg-zinc-800" />
               <p className="text-zinc-400 text-sm">
-                Desenvolvido com ❤️ por{" "}
+                Desenvolvido com 😾 por{" "}
                 <a 
                   target="_blank" 
                   rel="noopener noreferrer"
