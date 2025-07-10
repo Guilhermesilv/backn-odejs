@@ -80,7 +80,7 @@ export function ConfirmTripModal({
               type="text"
               name='name'
               placeholder='Seu nome completo'
-              className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
+              className='bg-transparent text-lg text-white placeholder-zinc-400 outline-none flex-1 relative z-10'
               onChange={event => setOwnerName(event.target.value)}
             />
           </div>
@@ -107,7 +107,7 @@ export function ConfirmTripModal({
               type="email"
               name='email'
               placeholder='Seu e-mail pessoal'
-              className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
+              className='bg-transparent text-lg text-white placeholder-zinc-400 outline-none flex-1 relative z-10'
               onChange={event => setOwnerEmail(event.target.value)}
             />
           </div>

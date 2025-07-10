@@ -117,7 +117,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
               type="text"
               name='title'
               placeholder='Qual a atividade?'
-              className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
+              className='bg-transparent text-lg text-white placeholder-zinc-400 outline-none flex-1 relative z-10'
               required
               disabled={isSubmitting}
             />
@@ -145,7 +145,7 @@ export function CreateActivityModal({ closeCreateActivityModal }:CreativeActivit
                 type="datetime-local"
                 name='occurs_at'
                 placeholder='Data e horário da atividade'
-                className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 relative z-10'
+                className='bg-transparent text-lg text-white placeholder-zinc-400 outline-none flex-1 relative z-10'
                 defaultValue={getDefaultDateTime()}
                 required
                 disabled={isSubmitting}
