@@ -1,7 +1,9 @@
 // src/lib/gemini.ts
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY, // Passe a chave explicitamente!
+});
 
 export async function perguntarGemini(pergunta: string, cidade: string) {
   const prompt = `
