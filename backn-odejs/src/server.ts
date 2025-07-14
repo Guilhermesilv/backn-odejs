@@ -18,6 +18,8 @@ import { getTripDetails } from './routes/get-trip-details'
 import { getParticipant } from './routes/get-participant'
 import { errorHandler } from './error-handler'
 import { env } from './env'
+import { aiChat } from './routes/ai-chat'
+
 
 const app = fastify({
   logger: env.NODE_ENV === 'production' ? true : false,
@@ -28,6 +30,8 @@ app.register(cors, {
   origin: env.NODE_ENV === 'production' ? env.WEB_BASE_URL : true,
   credentials: true,
 })
+
+app.register(aiChat)
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)

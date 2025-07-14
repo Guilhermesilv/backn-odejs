@@ -1,4 +1,6 @@
 import { Plus } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { api } from '../../lib/axios';
 import { useState } from 'react';
 import { CreateActivityModal } from './ModalCriaAtividade';
 import { ImportantLinks } from './LinksAirbnb';
@@ -10,6 +12,7 @@ import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pa
 
 export function TripDetailPage() {
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false)
+  const { tripId } = useParams();
 
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true)
@@ -17,6 +20,58 @@ export function TripDetailPage() {
 
   function closeCreateActivityModal() {
     setIsCreateActivityModalOpen(false)
+  }
+
+  // Componente de chat com IA
+  function ChatIA() {
+    const [pergunta, setPergunta] = useState('');
+    const [resposta, setResposta] = useState('');
+    const [carregando, setCarregando] = useState(false);
+    const [erro, setErro] = useState('');
+
+    const handlePerguntar = async () => {
+      if (!pergunta.trim()) return;
+      setCarregando(true);
+      setErro('');
+      setResposta('');
+      try {
+        const response = await api.post(`/trips/${tripId}/ai-chat`, { pergunta });
+        setResposta(response.data.resposta);
+      } catch (e) {
+        setErro('Erro ao consultar IA. Tente novamente.');
+      }
+      setCarregando(false);
+    };
+
+    return (
+      <div className="mt-8 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+        <h3 className="text-lg font-semibold text-zinc-100 mb-2">Pergunte e tire dúvidas de pontos turísticos, restaurantes, hotéis, etc. para nossa Inteligência Artificial</h3>
+        <div className="flex gap-2 mb-2">
+          <input
+            type="text"
+            className="flex-1 px-3 py-2 rounded bg-zinc-800 text-zinc-100 border border-zinc-700 focus:outline-none"
+            placeholder="Ex: Quais os melhores restaurantes?"
+            value={pergunta}
+            onChange={e => setPergunta(e.target.value)}
+            disabled={carregando}
+          />
+          <Button
+            variant="primary"
+            size="default"
+            onClick={handlePerguntar}
+            disabled={carregando || !pergunta.trim()}
+          >
+            {carregando ? 'Perguntando...' : 'Perguntar'}
+          </Button>
+        </div>
+        {erro && <div className="text-red-400 text-sm mb-2">{erro}</div>}
+        {resposta && (
+          <div className="mt-2 p-3 bg-zinc-800 rounded text-zinc-100 whitespace-pre-line">
+            {resposta}
+          </div>
+        )}
+      </div>
+    );
   }
 
   return (
@@ -54,6 +109,8 @@ export function TripDetailPage() {
             </div>
 
             <Activities />
+            {/* Chat com IA */}
+            <ChatIA />
           </div>
           <div className='w-80 space-y-6'>
             <ImportantLinks />
